@@ -1,0 +1,5 @@
+Adafruit-DHT
+paho-mqtt
+influxdb
+pandas
+matplotlib
