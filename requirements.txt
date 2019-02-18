@@ -3,3 +3,5 @@ paho-mqtt
 influxdb
 pandas
 matplotlib
+websocket-client
+netdisco

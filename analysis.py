@@ -32,5 +32,5 @@ test['gastenkamer-temperatuur-rocperdegree'] = test['gastenkamer-temperatuur-roc
 test['gastenkamer-temperatuur-rocperdegree'] = test['gastenkamer-temperatuur-rocperdegree'].rolling(12,center=True).mean()
 #test[['gastenkamer-temperatuur-avg','buiten2-temperatuur','gastenkamer-temperatuur-rocperdegree','gastenkamer-temperatuur-roc']].plot()
 test[['gastenkamer-temperatuur-rocperdegree']].plot()
-plt.ylim(-0.1,0.4)
+plt.ylim(-0.05,0.4)
 plt.show()

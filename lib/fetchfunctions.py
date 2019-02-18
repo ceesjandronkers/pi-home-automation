@@ -1,5 +1,8 @@
 from urllib.request import urlopen
 import json
+import websocket
+import ssl
+
 try:
     import Adafruit_DHT
 except ImportError:
@@ -48,14 +51,32 @@ def getweatherdata(url, object, mapping):
 
     return data
 
-def gets0data(devicenaam, pin)
+def gets0data(devicenaam, pin):
     data = dict()
-    f = open(workfile, 'ab+')  # open for reading. If it does not exist, create it
-    data[devicenaam + "/Whstand"] = float(f.readline().rstrip())  # read the first line; it should be an integer value
-    f.close()  # close for reading
+    #f = open(workfile, 'ab+')  # open for reading. If it does not exist, create it
+    #data[devicenaam + "/Whstand"] = float(f.readline().rstrip())  # read the first line; it should be an integer value
+    #f.close()  # close for reading
     # writing
     # f = open(workfile, 'w')
     # f.write((str(0) + '\n'))  # the value
     # f.write((str(datetime.datetime.now()) + '\n'))  # timestamp
     # f.close()
     return data
+
+
+def getdaikindata(dataset):
+    data = dict()
+    ws = websocket.create_connection("ws://192.168.1.65/mca", sslopt={"cert_reqs": ssl.CERT_NONE})
+    for key, value in dataset.items():
+        ws.send(value)
+        rawresult = ws.recv()
+        jsonresult = json.loads(rawresult)
+        try:
+            data[key] = jsonresult['m2m:rsp']['pc']['m2m:cin']['con']
+        except:
+            data[key] = 'none'
+    ws.close()
+    ws.shutdown()
+    return data
+
+
